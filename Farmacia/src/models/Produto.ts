@@ -1,4 +1,4 @@
-import Categoria from './Categoria';
+import Categoria from "./Categoria";
 
 export default interface Produto {
   id: number;
@@ -8,6 +8,5 @@ export default interface Produto {
   laboratorio: string;
   preco: number;
   foto: string;
-  data: string;
- categoria: Categoria | null;
+  categoria?: Categoria | null;
 }

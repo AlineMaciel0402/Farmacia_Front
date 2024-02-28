@@ -1,30 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Dna } from 'react-loader-spinner';
-import Categoria from '../../../models/Categoria';
 import { buscar } from '../../../services/Service';
-import CardCategorias from '../cardCategoria/CardCategorias';
+import Categoria from '../../../models/Categoria';
+import CardCategoria from '../cardCategoria/CardCategorias';
 
-function ListaCategorias() {
+function ListaCategoria() {
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
 
   async function buscarCategorias() {
     try {
-      await buscar('/categorias', setCategorias, {
-        headers: { Authorization: token },
-      });
-    } catch (error: any) {
-      if (error.toString().includes('403')) {
-        alert('O token expirou, favor logar novamente')
-        handleLogout()
-      }
-    }
-  }
 
-  useEffect(() => {
-    if (token === '') {
-      alert('Você precisa estar logado');
-      navigate('/login');
+        await buscar('/categorias', setCategorias)
+
+    } catch (error: any) {
+        alert("Erro ao buscar Categorias")
+        console.log(error);
     }
-  }, [token]);
+}
 
   useEffect(() => {
     buscarCategorias();
@@ -46,7 +38,7 @@ function ListaCategorias() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {categorias.map((categoria) => (
               <>
-                <CardCategorias key={categoria.id} categoria={categoria} />
+                <CardCategoria key={categoria.id} categoria={categoria} />
               </>
             ))}
           </div>
@@ -56,4 +48,4 @@ function ListaCategorias() {
   );
 }
 
-export default ListaCategorias;
+export default ListaCategoria;
